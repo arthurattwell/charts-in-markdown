@@ -12,7 +12,32 @@ THIS IS A CHART
 <script>
 var chart = c3.generate({
     bindto: '#{{ include.id }}',
-    data: {{ site.data[include.data] | jsonify }}
+    data: {
+
+        {% if include.type %}
+            type: '{{ include.type }}',
+        {% endif %}
+
+        {% if include.data-type == 'json' %}
+            {% if site.data[include.data].json %}
+                json: {{ site.data[include.data].json | jsonify }}
+            {% else %}
+                columns:  {{ site.data[include.data].columns | jsonify   }}
+            {% endif %}
+        {% else %}
+            json: {{ site.data[include.data] | jsonify }}
+        {% endif %}
+
+        {% if include.columns %}
+            ,
+            keys: {
+                {% if include.x %}
+                    x: '{{ include.x }}',
+                {% endif %}
+
+                value: {{ include.columns }}
+            }
+        {% endif %}
+    }
 });
 </script>
-
