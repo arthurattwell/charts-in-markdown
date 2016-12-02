@@ -43,8 +43,17 @@ var chart = c3.generate({
         x: {
             type: 'timeseries',
             tick: {
-                format: "%Y", // might want to parameterize this?
-                count: 5
+                count: 5,
+
+                {% if include.spans == 'centuries' %}
+                    format: '%Y'
+                {% elsif include.spans == 'years' '%}
+                    format: '%b %Y'
+                {% elsif include.spans == 'months' '%}
+                    format: '%d %b'
+                {% else %}
+                    format: "%Y-%m-%d"
+                {% endif %}
             }
         }
     }
