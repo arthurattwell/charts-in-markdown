@@ -43,7 +43,7 @@ var chart = c3.generate({
         x: {
             type: 'timeseries',
             tick: {
-                format: "%Y",
+                format: "%Y", // might want to parameterize this?
                 count: 5
             }
         }
